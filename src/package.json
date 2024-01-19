@@ -1,5 +1,5 @@
 {
-  "name": "hello_world",
+  "name": "burger_app",
   "version": "1.0.0",
   "description": "hello world sample for NodeJS",
   "main": "app.js",
@@ -13,7 +13,9 @@
     "test": "npm run compile && npm run unit"
   },
   "dependencies": {
-    "esbuild": "^0.14.14"
+    "@types/pg": "^8.10.9",
+    "esbuild": "^0.14.14",
+    "pg": "^8.11.3"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.92",
