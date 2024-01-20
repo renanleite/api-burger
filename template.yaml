@@ -22,7 +22,7 @@ Resources:
   GetStockFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/
+      CodeUri: api/
       Handler: app.getStockHandler
       Runtime: nodejs20.x
       Architectures:
@@ -45,7 +45,7 @@ Resources:
   AddItemToStockFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/
+      CodeUri: api/
       Handler: app.addItemToStockHandler
       Runtime: nodejs20.x
       Architectures:
@@ -68,7 +68,7 @@ Resources:
   DeleteItemFromStockFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/
+      CodeUri: api/
       Handler: app.deleteItemFromStockHandler
       Runtime: nodejs20.x
       Architectures:
