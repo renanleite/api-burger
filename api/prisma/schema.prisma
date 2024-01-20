@@ -1,11 +1,41 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model burger_ingredients {
+  id_ingredient_burger Int    @id @default(autoincrement())
+  id_ingredient        Int?
+  id_burger            Int?
+  quantity             Int
+  menu                 menu?  @relation(fields: [id_burger], references: [id_burger], onDelete: NoAction, onUpdate: NoAction)
+  stock                stock? @relation(fields: [id_ingredient], references: [id_ingredient], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model menu {
+  id_burger          Int                  @id @default(autoincrement())
+  burger_name        String               @db.VarChar(50)
+  price              Decimal              @db.Decimal(10, 2)
+  burger_ingredients burger_ingredients[]
+  orders             orders[]
+}
+
+model orders {
+  id_order   Int       @id @default(autoincrement())
+  id_burger  Int?
+  quantity   Int
+  order_date DateTime? @default(now()) @db.Timestamp(6)
+  menu       menu?     @relation(fields: [id_burger], references: [id_burger], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model stock {
+  id_ingredient      Int                  @id @default(autoincrement())
+  ingredient_name    String               @db.VarChar(50)
+  quantity           Int
+  burger_ingredients burger_ingredients[]
 }

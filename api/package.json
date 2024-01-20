@@ -13,9 +13,8 @@
     "test": "npm run compile && npm run unit"
   },
   "dependencies": {
-    "@types/pg": "^8.10.9",
-    "esbuild": "^0.14.14",
-    "pg": "^8.11.3"
+    "@prisma/client": "^5.8.1",
+    "esbuild": "^0.14.14"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.92",

@@ -1,10 +1,13 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { createDbClient } from '../db-connection';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export const deleteItemFromStockHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     if (event.httpMethod !== 'DELETE') {
         throw new Error(`Only delete method accepted, you tried: ${event.httpMethod}`);
     }
+
     console.info('received:', event);
 
     try {
@@ -15,11 +18,11 @@ export const deleteItemFromStockHandler = async (event: APIGatewayProxyEvent): P
             throw new Error('Missing ID in path parameters');
         }
 
-        const postgresClient = createDbClient();
-        await postgresClient.connect();
-
-        const query = 'DELETE FROM stock WHERE id_ingredient = $1';
-        await postgresClient.query(query, [itemId]);
+        await prisma.stock.delete({
+            where: {
+                id_ingredient: Number(itemId),
+            },
+        });
 
         const response = {
             statusCode: 200,
@@ -30,10 +33,12 @@ export const deleteItemFromStockHandler = async (event: APIGatewayProxyEvent): P
         return response;
     } catch (error) {
         console.error('Error', error);
+
         const response = {
             statusCode: 500,
             body: JSON.stringify({ error: 'Internal Server Error' }),
         };
+
         return response;
     }
 };

@@ -13,10 +13,7 @@ Globals:
     Runtime: nodejs20.x
     Environment:
       Variables:
-        PG_USER: postgres
-        PG_HOST: burger-db.ctc26gwyiewv.sa-east-1.rds.amazonaws.com
-        PG_DATABASE: burger_db
-        PG_PASSWORD: 123456789 
+        DATABASE_URL: postgresql://postgres:123456789@burger-db.ctc26gwyiewv.sa-east-1.rds.amazonaws.com:5432/burger_db
 
 Resources:
   GetStockFunction:
@@ -41,6 +38,11 @@ Resources:
         Sourcemap: true
         EntryPoints:
           - app.ts
+        Loader:
+          - .prisma=file
+          - .so.node=file
+        AssetNames: '[name]'
+
   
   AddItemToStockFunction:
     Type: AWS::Serverless::Function
@@ -64,6 +66,10 @@ Resources:
         Sourcemap: true
         EntryPoints:
           - app.ts
+        Loader:
+          - .prisma=file
+          - .so.node=file
+        AssetNames: '[name]'
   
   DeleteItemFromStockFunction:
     Type: AWS::Serverless::Function
@@ -87,6 +93,10 @@ Resources:
         Sourcemap: true
         EntryPoints:
           - app.ts
+        Loader:
+          - .prisma=file
+          - .so.node=file
+        AssetNames: '[name]'
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
