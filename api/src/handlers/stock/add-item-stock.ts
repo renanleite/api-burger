@@ -39,5 +39,7 @@ export const addItemToStockHandler = async (event: APIGatewayProxyEvent): Promis
             statusCode: 500,
             body: JSON.stringify({ error: 'Internal Server Error' }),
         };
+    } finally {
+        await prisma.$disconnect();
     }
 };

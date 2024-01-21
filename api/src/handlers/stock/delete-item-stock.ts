@@ -40,5 +40,7 @@ export const deleteItemFromStockHandler = async (event: APIGatewayProxyEvent): P
         };
 
         return response;
+    } finally {
+        await prisma.$disconnect();
     }
 };

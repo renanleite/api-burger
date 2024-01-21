@@ -29,5 +29,7 @@ export const getStockHandler = async (event: APIGatewayProxyEvent): Promise<APIG
         };
 
         return response;
+    } finally {
+        await prisma.$disconnect();
     }
 };
