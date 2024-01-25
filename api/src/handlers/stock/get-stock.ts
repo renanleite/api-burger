@@ -10,12 +10,19 @@ export const getStockHandler = async (event: APIGatewayProxyEvent): Promise<APIG
 
     console.info('received:', event);
 
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+    };
+
     try {
         const items = await prisma.stock.findMany();
 
         const response = {
             statusCode: 200,
             body: JSON.stringify(items),
+            headers: headers,
         };
         console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
 
